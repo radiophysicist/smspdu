@@ -1,0 +1,15 @@
+.idea/*
+
+.project
+.pydevproject
+.settings/
+
+*.swp
+*.pyc
+*.log
+
+# Unittesing stuff
+.cache
+.coverage
+htmlcov/
+tests_report.xml
