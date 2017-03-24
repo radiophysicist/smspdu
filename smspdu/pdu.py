@@ -13,6 +13,7 @@ the detail of the book.
 
 import re
 import time
+import calendar
 import unicodedata
 import gsm0338
 
@@ -429,7 +430,7 @@ class SMS_DELIVER(SMS_GENERIC):
         else:
             if datestamp is None:
                 datestamp = time.time()
-            tp_scts = time.strftime('%y%m%d%H%M%S00', time.localtime(datestamp))
+            tp_scts = time.strftime('%y%m%d%H%M%S00', time.gmtime(datestamp))
 
         # determine TP-Address-Length and TP-Type-of-Address
         tp_al, tp_toa, tp_oa = cls.determineAddress(sender)
@@ -481,7 +482,7 @@ class SMS_DELIVER(SMS_GENERIC):
         tp_scts = unpack_date(tpdu.octets(7))
         if not datestamp:
             # XXX datestamp ignores / loses timestamp
-            datestamp = time.mktime(time.strptime('20' + tp_scts[:12],
+            datestamp = calendar.timegm(time.strptime('20' + tp_scts[:12],
                 '%Y%m%d%H%M%S'))
 
         # TP-User-Data(-Length) and headers

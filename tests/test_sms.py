@@ -3,6 +3,7 @@ import os
 import time
 import binascii
 import unittest
+import calendar
 
 import smspdu
 
@@ -66,7 +67,7 @@ class SMS_PDU_Test(unittest.TestCase):
 
     def test_tpdu_encode(self):
         p = smspdu.SMS_DELIVER.create('46708251358', 'test', u'hellohello',
-            datestamp=time.mktime((2009, 8, 7, 6, 5, 4, 0, 0, 0)),
+            datestamp=calendar.timegm((2009, 8, 7, 6, 5, 4, 0, 0, 0)),
             tp_sri=1, tp_mms=0)
         self.assertEquals(p.toPDU(),
                 '200B916407281553F80000908070605040000AE8329BFD4697D9EC37')
@@ -78,7 +79,7 @@ class SMS_PDU_Test(unittest.TestCase):
 
     def test_tpdu_encode_alpha_sender(self):
         p = smspdu.SMS_DELIVER.create('eKit', 'test', u'hellohello',
-            datestamp=time.mktime((2009, 8, 7, 6, 5, 4, 3, 0, 0)),
+            datestamp=calendar.timegm((2009, 8, 7, 6, 5, 4, 0, 0, 0)),
             tp_sri=1, tp_mms=0)
         self.assertEquals(p.toPDU(),
             '2008D0E5659A0E0000908070605040000AE8329BFD4697D9EC37')
@@ -295,7 +296,7 @@ class SMS_PDU_Test(unittest.TestCase):
 
     def test_mwi(self):
         p = smspdu.SMS_DELIVER.create('eKit', 'test', u'hellohello',
-            datestamp=time.mktime((2009, 8, 7, 6, 5, 4, 3, 0, 0)),
+            datestamp=calendar.timegm((2009, 8, 7, 6, 5, 4, 3, 0, 0)),
             tp_sri=1, tp_mms=0, tp_dcs=0xD8)
         # this hasn't actually been verified as correct
         self.assertEquals(p.toPDU(),
